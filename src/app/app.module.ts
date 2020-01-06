@@ -23,6 +23,11 @@ import { AssignmentClinetLinkComponent } from './dashboard/admin/assignment-clin
 import { AssignmentEmployeeLinkComponent } from './dashboard/admin/assignment-employee-link/assignment-employee-link.component';
 import { ServerNotFoundComponent } from './server-not-found/server-not-found.component';
 import {NgxPaginationModule} from 'ngx-pagination';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
+import { NgxWebstorageModule } from 'ngx-webstorage';
+import { AuthGuard } from './auth.guard';
 
 @NgModule({
   declarations: [
@@ -51,10 +56,15 @@ import {NgxPaginationModule} from 'ngx-pagination';
     MatCardModule,
     MatInputModule,
     MatButtonModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    FormsModule,
+    RouterModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    NgxWebstorageModule.forRoot(),
     
   ],
-  providers: [],
+  providers: [AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

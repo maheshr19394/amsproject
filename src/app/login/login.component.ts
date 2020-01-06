@@ -1,27 +1,46 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-export interface Food {
-  value: string;
-  viewValue: string;
-}
+import { Validators, FormGroup, FormBuilder } from '@angular/forms';
+import {LocalStorageService, SessionStorageService} from 'ngx-webstorage';
+import { AuthGuard } from '../auth.guard';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
+  providers: [AuthGuard]
+
 })
 export class LoginComponent implements OnInit {
-
-  constructor( private myRoute: Router) { }
+  loginForm: FormGroup;
+  isSubmitted= false;
+  password: string;
+  username: string;
+  submitted: boolean;
+  constructor( private myRoute: Router,private formBuilder: FormBuilder,private localSt:LocalStorageService) { }
 
   ngOnInit() {
+    this.loginForm  =  this.formBuilder.group({
+      username: ['', Validators.required],
+      password: ['', Validators.required]
+  });
   }
-  foods: Food[] = [
-    { value: 'steak-0', viewValue: 'Steak' },
-    { value: 'pizza-1', viewValue: 'Pizza' },
-    { value: 'tacos-2', viewValue: 'Tacos' }
-  ];
-  ngSumbit(){
-    this.myRoute.navigate(["/dashboard"]);
-
+  login(){
+    this.submitted = true;
+  if (this.loginForm.invalid) {
+    return;
+  }
+  this.username = this.loginForm.controls['username'].value;
+  this.password = this.loginForm.controls['password'].value;
+  if(this.username === 'test' && this.password === 'test'){
+    alert('Login suceessfully');
+    this.myRoute.navigate(['/dashboard']);
+    this.localSt.store('loginDetaisl', this.loginForm.value);
+  }else {
+    alert('Invalid credentials');
+    this.loginForm.reset();
+    this.submitted = false;
+  }
+  //console.log("login details locatl"+this.localSt.retrieve('loginDetaisl'));
   }
 }

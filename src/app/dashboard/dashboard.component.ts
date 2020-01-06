@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor() { }
+  constructor( private router :Router) { }
 
   ngOnInit() {
   }
@@ -21,5 +22,8 @@ export class DashboardComponent implements OnInit {
       this.toggled = !this.toggled;
       this.slideOpen = !this.slideOpen;
   }
- 
+ close(){
+  localStorage.clear();
+  this.router.navigate(['/login']);
+ }
 }

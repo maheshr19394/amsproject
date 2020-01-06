@@ -9,6 +9,7 @@ import { AssignmentsComponent } from './dashboard/admin/assignments/assignments.
 import { ClientsComponent } from './dashboard/admin/clients/clients.component';
 import { EmployeesComponent } from './dashboard/admin/employees/employees.component';
 import { ServerNotFoundComponent } from './server-not-found/server-not-found.component';
+import { AuthGuard } from './auth.guard';
 
 
 
@@ -24,7 +25,7 @@ const routes: Routes = [
     path: '', redirectTo: 'login', pathMatch: 'full',
   },
 
-  { path: 'dashboard', component: DashboardComponent,children: [  
+  { path: 'dashboard', component: DashboardComponent,canActivate : [AuthGuard], children: [  
     { path: '', component:  AllEmployeesComponent},   
   { path: 'allEmployees', component:  AllEmployeesComponent},
   { path: 'clients', component: ClientsComponent },
